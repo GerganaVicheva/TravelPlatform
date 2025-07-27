@@ -1,0 +1,12 @@
+﻿@model TravelPlatform.ViewModels.CommentViewModel
+
+<div class="comment d-flex align-content-center">
+    <img src="@(Model.UserProfilePictureUrl ?? "/images/user.png")" alt="User" class="me-2 mt-1 border rounded-circle" />
+    <div>
+        <strong>@Model.Username</strong>
+        <p>@Model.Content</p>
+    </div>
+    <div class="comment-meta ms-auto text-end">
+        <span class="comment-date">@Model.CreatedAt.ToLocalTime().ToString("D")</span>
+    </div>
+</div>

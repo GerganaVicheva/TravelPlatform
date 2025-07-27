@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TravelPlatform.ViewModels.SuggestedProfilesViewModel>
+
+@{
+    ViewData["Title"] = "Suggested Profiles";
+}
+
+<link href="~/css/suggested-profiles.css" rel="stylesheet" asp-append-version="true" />
+
+<h2>Suggested Profiles</h2> 
+
+<div class="suggested-profiles"> 
+    @foreach (var profile in Model)
+    { 
+        <div class="profile-card">
+            @if (profile.ProfilePictureUrl == null)
+            {
+                <img src="~/images/user.png" alt="Default Profile Picture" class="profile-picture" style="padding: 10px !important;">
+            }
+            else
+            {
+                <img src="@profile.ProfilePictureUrl" alt="Profile Picture" class="profile-picture">
+            }
+            <div>
+                <p>@profile.Username</p>
+                @if (profile.Bio == null)
+                {
+                    <p class="bio">This user has not provided a bio.</p>
+                }
+                else
+                {
+                    <p class="bio">@profile.Bio</p>
+                }
+            </div>
+            <div>
+                <button class="follow-btn">Follow</button>
+                <a href="#">View Profile</a>
+            </div> 
+        </div>
+    }
+</div>

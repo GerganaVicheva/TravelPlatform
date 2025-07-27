@@ -1,0 +1,56 @@
+﻿@model TravelPlatform.ViewModels.AddPostInputModel
+
+@{
+    ViewData["Title"] = "Create New Post";
+}
+
+<link href="~/css/edit-account-add-post.css" rel="stylesheet" asp-append-version="true" />
+
+<h2 class="h-add">Create a New Post</h2>
+
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <hr />
+    <h4>Destination Details</h4>
+
+    <div class="form-group mt-3">
+        <label asp-for="DestinationName">Destination Name</label>
+        <input asp-for="DestinationName" class="form-control" />
+        <span asp-validation-for="DestinationName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="DestinationTown">Destination Town</label>
+        <input asp-for="DestinationTown" class="form-control" />
+        <span asp-validation-for="DestinationTown" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label asp-for="DestinationCountry">Destination Country</label>
+        <input asp-for="DestinationCountry" class="form-control" />
+        <span asp-validation-for="DestinationCountry" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4">Post</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

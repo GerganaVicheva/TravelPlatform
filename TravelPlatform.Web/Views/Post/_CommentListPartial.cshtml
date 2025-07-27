@@ -1,0 +1,13 @@
+﻿@model IEnumerable<TravelPlatform.ViewModels.CommentViewModel>
+
+@if (!Model.Any())
+{
+    <p class="text-muted text-center">No comments yet.</p>
+}
+else
+{
+    @foreach (var comment in Model)
+    {
+        <partial name="_SingleCommentPartial" model="comment" />
+    }
+}

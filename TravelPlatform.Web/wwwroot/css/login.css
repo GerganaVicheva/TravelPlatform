@@ -1,0 +1,161 @@
+﻿:root {
+    --smokey-white: #EDF4EE;
+    --green: #6C9283;
+    --blue: #69A7D9;
+    --brown: #444643;
+    --gray: #D1D0D9;
+    --red: #CB7A80;
+}
+
+body {
+    background-color: var(--smokey-white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--brown);
+    padding-top: 50px;
+}
+
+main {
+    height: 100vh;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+section {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(108, 146, 131, 0.15);
+    padding: 30px;
+    margin: 20px;
+    transition: transform 0.3s ease;
+}
+
+h2, h3 {
+    color: var(--green);
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+hr {
+    border: none;
+    height: 3px;
+    background: linear-gradient(to right, var(--green), var(--blue));
+    border-radius: 3px;
+    margin: 20px 0;
+}
+
+.form-floating {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.form-control {
+    background-color: var(--smokey-white);
+    border: 2px solid var(--gray);
+    border-radius: 12px;
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(105, 167, 217, 0.2);
+    outline: none;
+}
+
+.form-label {
+    top: 0;
+    left: 12px;
+    padding: 0 5px;
+    font-size: 14px;
+    color: var(--green);
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green);
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: var(--green);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(108, 146, 131, 0.2);
+}
+
+button[type="submit"]:hover {
+    background-color: #5a7d70;
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(105, 167, 217, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #5692c2;
+}
+
+a {
+    color: var(--green);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--blue);
+}
+
+.text-danger {
+    color: var(--red);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.signin a {
+    font-size: 14px;
+}
+
+::placeholder {
+    text-align: left !important;
+}
+
+.google-icon {
+    width: 25px;
+    background-color: var(--smokey-white);
+}
