@@ -136,8 +136,15 @@ namespace TravelPlatform.Web.Controllers
 
 				//return RedirectToAction("Index", "UserAccount", new { userId });
 
-				var postInfo = await _travelService.GetUserProfileInfoAsync(userId);
-				int likesCount = postInfo.Posts.FirstOrDefault(p => p.Id == postId).Likes;
+				//var postInfo = await _travelService.GetUserProfileInfoAsync(userId);
+				//int likesCount = postInfo.Posts.FirstOrDefault(p => p.Id == postId).Likes;
+
+				var likesCount = await _travelService.GetPostLikesCountAsync(postId);
+
+				if (likesCount == null)
+				{
+					return Json(new { success = false, message = "Post not found" });
+				}
 
 				return Json(new { success = true, liked = result, likes = likesCount });
 			}

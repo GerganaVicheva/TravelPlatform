@@ -6,6 +6,8 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - TravelPlatform.Web</title>
+	<link rel="icon" type="image/png" href="~/images/travel.png" />
+
 	<script type="importmap"></script>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -20,6 +22,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+
+	@await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="min-vh-100">
 	<header style="margin-bottom: 0px !important;">
@@ -39,7 +43,7 @@
 						<button class="dropbtn">Explore</button>
 						<div class="dropdown-content">
 							<a asp-controller="Suggested" asp-action="Profiles">View Porfiles</a>
-							<a href="#">View Posts</a>
+							<a asp-controller="Suggested" asp-action="Posts">View Posts</a>
 						</div>
 					</li>
 				}
@@ -159,6 +163,7 @@
 	<script src="~/js/ajax-message.js" asp-append-version="true"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

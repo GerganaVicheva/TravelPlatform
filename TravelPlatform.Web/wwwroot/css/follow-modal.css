@@ -1,0 +1,75 @@
+﻿.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    height: 80vh;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.custom-close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.view-prof a {
+    display: inline-block;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px;
+    transition: color 0.2s ease;
+    margin-right: 10px;
+}
+
+.view-prof a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.custom-close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px; 
+    height: 40px;
+    background: transparent;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    line-height: 40px; 
+    text-align: center;
+    border-radius: 50%;
+    transition: background-color 0.4s ease;
+}
+
+.custom-close-modal:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}

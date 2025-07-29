@@ -1,40 +1,50 @@
 ﻿@model IEnumerable<TravelPlatform.ViewModels.SuggestedProfilesViewModel>
 
 @{
-    ViewData["Title"] = "Suggested Profiles";
+	ViewData["Title"] = "Suggested Profiles";
 }
 
-<link href="~/css/suggested-profiles.css" rel="stylesheet" asp-append-version="true" />
+@section Styles {
+	<link href="~/css/suggested-profiles.css" rel="stylesheet" asp-append-version="true" />
+}
 
-<h2>Suggested Profiles</h2> 
+<h2 class="sugg-h2">Suggested Profiles</h2>
 
-<div class="suggested-profiles"> 
-    @foreach (var profile in Model)
-    { 
-        <div class="profile-card">
-            @if (profile.ProfilePictureUrl == null)
-            {
-                <img src="~/images/user.png" alt="Default Profile Picture" class="profile-picture" style="padding: 10px !important;">
-            }
-            else
-            {
-                <img src="@profile.ProfilePictureUrl" alt="Profile Picture" class="profile-picture">
-            }
-            <div>
-                <p>@profile.Username</p>
-                @if (profile.Bio == null)
-                {
-                    <p class="bio">This user has not provided a bio.</p>
-                }
-                else
-                {
-                    <p class="bio">@profile.Bio</p>
-                }
-            </div>
-            <div>
-                <button class="follow-btn">Follow</button>
-                <a href="#">View Profile</a>
-            </div> 
-        </div>
-    }
+<div class="suggested-profiles">
+	@if (Model == null || !Model.Any())
+	{
+		<p class="no-profiles ms-3 mt-0" style="color: var(--brown); font-size: 16px;">There are no suggested profiles yet. Come back to check later!</p>
+	}
+	else
+	{
+		@foreach (var profile in Model)
+		{
+			<div class="profile-card d-flex align-items-center flex-row" style="margin: 20px;">
+				<div class="prof-img me-3">
+					@if (profile.ProfilePictureUrl == null)
+					{
+						<img src="~/images/user.png" alt="Default Profile Picture" class="profile-picture" style="padding: 10px !important;">
+					}
+					else
+					{
+						<img src="@profile.ProfilePictureUrl" alt="Profile Picture" class="profile-picture">
+					}
+				</div>
+				<div class="flex-grow-1">
+					<p>@profile.Username</p>
+					@if (profile.Bio == null)
+					{
+						<p class="bio">This user has not provided a bio.</p>
+					}
+					else
+					{
+						<p class="bio">@profile.Bio</p>
+					}
+				</div>
+				<div class="mt-0 flex-grow-1 d-flex justify-content-end">
+					<a asp-controller="UserAccount" asp-action="Index" asp-route-userId="@profile.UserId">View Profile</a>
+				</div>
+			</div>
+		}
+	}
 </div>

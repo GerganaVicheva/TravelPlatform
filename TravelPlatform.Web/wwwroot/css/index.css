@@ -217,24 +217,24 @@ nav .nav-links a:hover::after {
     pointer-events: none;
 }
 
-    .carousel-slide.active {
-        opacity: 1;
-        transform: translateX(0);
-        animation: slideInRight 0.5s forwards;
-        pointer-events: auto;
-    }
+.carousel-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    animation: slideInRight 0.5s forwards;
+    pointer-events: auto;
+}
 
-    .carousel-slide.slide-in-right {
-        opacity: 1;
-        transform: translateX(0);
-        animation: slideInRight 1.5s ease-in-out;
-    }
+.carousel-slide.slide-in-right {
+    opacity: 1;
+    transform: translateX(0);
+    animation: slideInRight 1.5s ease-in-out;
+}
 
-    .carousel-slide.slide-out-left {
-        opacity: 0;
-        transform: translateX(-100%);
-        animation: slideOutLeft 1.5s ease-in-out;
-    }
+.carousel-slide.slide-out-left {
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideOutLeft 1.5s ease-in-out;
+}
 
 @keyframes slideInRight {
     from {
@@ -312,25 +312,25 @@ nav .nav-links a:hover::after {
     margin-top: 32px;
 }
 
-    .carousel-nav button {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        border: 2px solid var(--green);
-        background-color: transparent;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+.carousel-nav button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--green);
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-        .carousel-nav button:hover {
-            background-color: var(--green);
-            transform: scale(1.2);
-        }
+.carousel-nav button:hover {
+    background-color: var(--green);
+    transform: scale(1.2);
+}
 
-        .carousel-nav button.active {
-            background-color: var(--green);
-            transform: scale(1.1);
-        }
+.carousel-nav button.active {
+    background-color: var(--green);
+    transform: scale(1.1);
+}
 
 
 /* Footer container */
@@ -449,9 +449,6 @@ ul.list-unstyled li {
     line-height: 2 !important;
 }
 
-/*.carousel-section {
-    padding-bottom: 330px;
-}*/
 
 #team {
     background-color: var(--smokey-white);
@@ -526,30 +523,30 @@ ul.list-unstyled li {
     padding-left: 0;
 }
 
-    .team-list li {
-        padding: 0.5rem 0;
-        border-bottom: 1px solid rgba(209, 208, 217, 0.3);
-    }
+.team-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(209, 208, 217, 0.3);
+}
 
 .btn-primary {
     background-color: var(--green);
     border-color: var(--green);
 }
 
-    .btn-primary:hover {
-        background-color: #5a7a6d;
-        border-color: #5a7a6d;
-    }
+.btn-primary:hover {
+    background-color: #5a7a6d;
+    border-color: #5a7a6d;
+}
 
 .btn-secondary {
     background-color: var(--blue);
     border-color: var(--blue);
 }
 
-    .btn-secondary:hover {
-        background-color: #5789b6;
-        border-color: #5789b6;
-    }
+.btn-secondary:hover {
+    background-color: #5789b6;
+    border-color: #5789b6;
+}
 
 .team-img img {
     width: 270px;
@@ -594,13 +591,13 @@ html {
     z-index: 1;
 }
 
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        font-size: 16px;
-    }
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+}
 
 .dropdown:hover .dropdown-content {
     display: block;

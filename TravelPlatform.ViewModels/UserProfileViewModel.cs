@@ -12,9 +12,9 @@
 
 		public int PostCount { get; set; }
 
-		public int Followers { get; set; }
+		public List<SuggestedProfilesViewModel> Followers { get; set; } = new();
 
-		public int Following { get; set; }
+		public List<SuggestedProfilesViewModel> Following { get; set; } = new();
 
 		public List<UserPostViewModel> Posts { get; set; } = new();
 	}

@@ -6,7 +6,9 @@
 	ViewData["Title"] = "Contact us";
 }
 
-<link href="~/css/contact.css" rel="stylesheet" asp-append-version="true" />
+@section Styles {
+	<link href="~/css/contact.css" rel="stylesheet" asp-append-version="true" />
+}
 
 <div class="contact-page">
 	<!-- Header Section -->
@@ -80,7 +82,9 @@
 						<p class="text-light mb-4">
 							Subscribe to our newsletter and get the latest updates, news, and special offers delivered to your inbox.
 						</p>
-						<button class="btn btn-dark w-100">Subscribe Now</button>
+						@* <button class="btn btn-dark w-100">Subscribe Now</button> *@
+						<button class="btn btn-dark w-100" onclick="showMessage()">Subscribe Now</button>
+						<div id="subscribeMessage" style="margin-top: 10px; color: var(--smokey-white);"></div>
 					</div>
 				</div>
 			</div>
@@ -152,4 +156,15 @@
 @section Scripts {
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="~/js/ajax-message.js" asp-append-version="true"></script>
+
+	<script>
+			  function showMessage() {
+		  const messageDiv = document.getElementById('subscribeMessage');
+		  messageDiv.textContent = 'Subscribed! Thank you!';
+
+		  setTimeout(() => {
+			messageDiv.textContent = '';
+		  }, 3000);
+		}
+	</script>
 }

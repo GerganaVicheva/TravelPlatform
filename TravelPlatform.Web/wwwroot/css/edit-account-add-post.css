@@ -62,11 +62,11 @@ label {
     transition: all 0.3s ease;
 }
 
-    .form-control:focus {
-        border-color: var(--green);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(108, 146, 131, 0.2);
-    }
+.form-control:focus {
+    border-color: var(--green);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(108, 146, 131, 0.2);
+}
 
 textarea.form-control {
     min-height: 120px;
@@ -91,19 +91,19 @@ textarea.form-control {
     font-size: 1rem;
 }
 
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 .btn-primary {
     background-color: var(--green);
     color: white;
 }
 
-    .btn-primary:hover {
-        background-color: #5a7b6f;
-    }
+.btn-primary:hover {
+    background-color: #5a7b6f;
+}
 
 .btn-secondary {
     background-color: var(--gray);
@@ -111,9 +111,9 @@ textarea.form-control {
     margin-left: 10px;
 }
 
-    .btn-secondary:hover {
-        background-color: #bdbdc7;
-    }
+.btn-secondary:hover {
+    background-color: #bdbdc7;
+}
 
 /* Spacing utilities */
 .mt-3 {

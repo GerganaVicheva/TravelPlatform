@@ -16,7 +16,7 @@
     flex-direction: row;
     width: 80%;
     max-width: 1200px;
-    max-height: 80vh; /* Limit modal height */
+    height: 80vh; /* Limit modal height */
     overflow: hidden; /* Prevent overflow */
     background: white;
     padding: 20px;
@@ -44,9 +44,9 @@
     transition: background 0.2s ease;
 }
 
-    .close-modal:hover {
-        background: rgba(0,0,0,0.1);
-    }
+.close-modal:hover {
+    background: rgba(0,0,0,0.1);
+}
 
 /* Left Side - Image */
 .modal-image {
@@ -88,47 +88,47 @@
     margin-top: auto; /* Push form to bottom */
     border-top: 1px solid #eee;
     padding-top: 15px;
-    padding-left: 0;
-    border-left: none;
+    padding-left: 15px;
+    border-left: 1px solid #eee;
     position: relative;
 }
 
-    #addCommentForm textarea {
-        width: 100%;
-        border: none;
-        resize: none;
-        font-family: inherit;
-        font-size: 14px;
-        padding: 10px 70px 10px 0;
-        background: transparent;
-        height: 60px;
-    }
+#addCommentForm textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 70px 10px 0;
+    background: transparent;
+    height: 60px;
+}
 
-        #addCommentForm textarea:focus {
-            outline: none;
-        }
+#addCommentForm textarea:focus {
+    outline: none;
+}
 
-    #addCommentForm button {
-        position: absolute;
-        right: 0;
-        background: transparent;
-        color: #6C9283;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        padding: 8px 12px;
-        border-radius: 4px;
-        transition: all 0.2s ease;
-    }
+#addCommentForm button {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    color: #6C9283;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
 
-        #addCommentForm button:hover {
-            background: rgba(108, 146, 131, 0.1);
-        }
+#addCommentForm button:hover {
+    background: rgba(108, 146, 131, 0.1);
+}
 
-        #addCommentForm button:disabled {
-            color: #ccc;
-            cursor: not-allowed;
-        }
+#addCommentForm button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
 
 /* Individual Comment */
 .comment {

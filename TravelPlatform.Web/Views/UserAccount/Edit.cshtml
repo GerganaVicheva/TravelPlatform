@@ -6,7 +6,9 @@
     var currentUserId = ViewData["CurrentUserId"] as string;
 }
 
-<link href="~/css/edit-account-add-post.css" rel="stylesheet" asp-append-version="true" />
+@section Styles {
+    <link href="~/css/edit-account-add-post.css" rel="stylesheet" asp-append-version="true" />
+}
 
 <h2 class="h-edit">Edit Your Account</h2>
 

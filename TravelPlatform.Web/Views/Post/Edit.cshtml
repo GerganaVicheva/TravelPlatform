@@ -6,7 +6,9 @@
     var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-<link href="~/css/edit-account-add-post.css" rel="stylesheet" asp-append-version="true" />
+@section Styles {
+    <link href="~/css/edit-account-add-post.css" rel="stylesheet" asp-append-version="true" />
+}
 
 <h2 class="h-add">Edit Post</h2>
 

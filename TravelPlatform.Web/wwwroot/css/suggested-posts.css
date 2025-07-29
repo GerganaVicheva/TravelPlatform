@@ -1,0 +1,175 @@
+﻿body {
+    background-color: var(--smokey-white);
+    color: var(--brown);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 60px;
+}
+
+/* Card Container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    padding: 20px 0;
+    padding-bottom: 185px;
+}
+
+.col-md-4 {
+    width: calc(33.333% - 24px);
+    margin-left: 0px;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+.col-md-4:hover {
+    transform: translateY(-5px);
+}
+
+.sugg-container {
+    width: 90%;
+}
+
+/* Card Styling */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(108, 146, 131, 0.1);
+    border: none;
+    height: 100%;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 25px rgba(108, 146, 131, 0.2);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--green);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Text Elements */
+.card-title {
+    color: var(--brown);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.card-subtitle {
+    color: var(--blue);
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.card-text {
+    color: var(--brown);
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+/* Icons and Metadata */
+.text-muted {
+    color: var(--gray) !important;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.small {
+    font-size: 12px;
+}
+
+.mb-2 {
+    margin-bottom: 10px;
+}
+
+.mb-4 {
+    margin-bottom: 25px;
+}
+
+.bi {
+    margin-right: 5px;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary {
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--blue);
+    color: white;
+}
+
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 13px;
+}
+
+/* Heading Style */
+.sugg-h2 {
+    color: var(--dark-green);
+    font-weight: 600;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--green);
+    display: inline-block;
+    font-size: 29px;
+    margin-left: 20px;
+    margin-bottom: 0px;
+}
+
+/* Card Footer Effects */
+.card .d-flex {
+    padding-top: 10px;
+    border-top: 1px solid var(--smokey-white);
+}
+
+/* Card Image Hover Effect */
+.card:hover .card-img-top {
+    opacity: 0.9;
+}
+
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Push the entire footer section to the bottom */
+.card-footer-section {
+    margin-top: auto;
+}

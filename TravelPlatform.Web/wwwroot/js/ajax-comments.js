@@ -19,6 +19,9 @@
         // Load comments
         $.get(`/Post/GetComments?postId=${postId}`, function (data) {
             $('#commentsList').html(data);
+
+            const $commentsList = $('#commentsList');
+            $commentsList.scrollTop($commentsList[0].scrollHeight);
         });
     });
 
@@ -37,6 +40,9 @@
         $.post('/Post/AddComment', { postId, content }, function (response) {
             if (response.success) {
                 const comment = response.comment;
+
+                $('#no-comments-message').remove();
+
                 const commentHtml = `
             <div class="comment">
                 <img src="${comment.userProfilePictureUrl || '/images/user.png'}" class="comment-avatar me-2 mt-1 border rounded-circle" />
@@ -51,6 +57,15 @@
         `;
                 $('#commentsList').append(commentHtml);
                 $('#addCommentForm textarea[name="content"]').val('');
+
+                const $commentLink = $(`.open-comments-modal[data-post-id="${postId}"]`);
+                if ($commentLink.length) {
+                    const currentText = $commentLink.text().trim();
+                    const match = currentText.match(/\d+/);
+                    const currentCount = match ? parseInt(match[0], 10) : 0;
+                    const newCount = currentCount + 1;
+                    $commentLink.html(`<i class="bi bi-chat-right-dots"></i> ${newCount}`);
+                }
             } else {
                 alert('Failed to add comment.');
             }

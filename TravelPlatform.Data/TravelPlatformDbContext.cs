@@ -46,7 +46,7 @@ public class TravelPlatformDbContext : IdentityDbContext
 		{
 			entity.HasOne(p => p.User)
 			.WithMany()
-			.OnDelete(DeleteBehavior.Cascade);
+			.OnDelete(DeleteBehavior.Restrict);
 
 			entity.HasOne(p => p.Destination)
 				.WithMany(d => d.Posts)

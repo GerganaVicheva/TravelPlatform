@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelPlatform.Web.Data;
 
@@ -11,9 +12,11 @@ using TravelPlatform.Web.Data;
 namespace TravelPlatform.Data.Migrations
 {
     [DbContext(typeof(TravelPlatformDbContext))]
-    partial class TravelPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729075931_changedDeleteBehaviour")]
+    partial class changedDeleteBehaviour
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

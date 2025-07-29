@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TravelPlatform.ViewModels.SuggestedProfilesViewModel>
+
+<div class="modal-follow-list" style="width:100%; overflow-y:auto;">
+
+	@if (Model == null || !Model.Any())
+	{
+		<p style="color: var(--brown); font-size: 16px;">No profiles found.</p>
+	}
+	else
+	{
+		@foreach (var profile in Model)
+		{
+			<div class="profile-card d-flex align-items-center flex-row" style="margin: 15px 0;">
+				<div class="prof-img me-3">
+					@if (string.IsNullOrEmpty(profile.ProfilePictureUrl))
+					{
+						<img src="~/images/user.png" alt="Default Profile Picture" class="profile-picture p-1" style="width:48px; height:48px; border: 1px solid var(--green);">
+					}
+					else
+					{
+						<img src="@profile.ProfilePictureUrl" alt="Profile Picture" class="profile-picture" style="width:48px; height:48px; border-radius:50%; border: 1px solid var(--green);">
+					}
+				</div>
+				<div class="flex-grow-1">
+					<p class="m-0 p-0"><strong>@profile.Username</strong></p>
+				</div>
+				<div class="mt-0 d-flex justify-content-end align-items-center view-prof">
+					<a asp-controller="UserAccount" asp-action="Index" asp-route-userId="@profile.UserId" class="btn btn-link ms-2">View Profile</a>
+				</div>
+			</div>
+		}
+	}
+</div>

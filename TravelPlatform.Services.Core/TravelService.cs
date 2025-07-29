@@ -62,11 +62,13 @@ namespace TravelPlatform.Services.Core
 			return valid;
 		}
 
-		public async Task<UserProfileViewModel> GetUserProfileInfoAsync(string userId)
+		public async Task<UserProfileViewModel> GetUserProfileInfoAsync(string userId, string currentUserId)
 		{
 			var user = await _dbContext.ApplicationUsers
 			.Include(u => u.Followers)
+			.ThenInclude(f => f.Follower)
 			.Include(u => u.Following)
+			.ThenInclude(f => f.Following)
 			.FirstOrDefaultAsync(u => u.Id == userId);
 
 			var posts = await _dbContext.Posts
@@ -87,10 +89,29 @@ namespace TravelPlatform.Services.Core
 					DestinationName = p.Destination.Name,
 					Town = p.Destination.Town,
 					Country = p.Destination.Country,
-					IsLikedByCurrentUser = _dbContext.Likes
-						.Any(l => l.PostId == p.Id && l.UserId == userId)
+					//IsLikedByCurrentUser = _dbContext.Likes
+					//	.Any(l => l.PostId == p.Id && l.UserId == userId)
+					IsLikedByCurrentUser = p.Likes.Any(l => l.UserId == currentUserId)
 				})
 				.ToListAsync();
+
+			var followers = user.Followers.Select(f => new SuggestedProfilesViewModel
+			{
+				UserId = f.FollowerId,
+				Username = f.Follower.UserName,
+				ProfilePictureUrl = f.Follower.ProfilePictureUrl,
+				Bio = f.Follower.Bio,
+				IsFollowing = _dbContext.Follows.Any(x => x.FollowerId == currentUserId && x.FollowingId == f.FollowerId)
+			}).ToList();
+
+			var following = user.Following.Select(f => new SuggestedProfilesViewModel
+			{
+				UserId = f.FollowingId,
+				Username = f.Following.UserName,
+				ProfilePictureUrl = f.Following.ProfilePictureUrl,
+				Bio = f.Following.Bio,
+				IsFollowing = _dbContext.Follows.Any(x => x.FollowerId == currentUserId && x.FollowingId == f.FollowingId)
+			}).ToList();
 
 			var profileInfo = new UserProfileViewModel
 			{
@@ -98,8 +119,8 @@ namespace TravelPlatform.Services.Core
 				Username = user!.UserName!,
 				Bio = user!.Bio!,
 				ProfilePictureUrl = user.ProfilePictureUrl,
-				Followers = user.Followers.Count,
-				Following = user.Following.Count,
+				Followers = followers,
+				Following = following,
 				Posts = posts
 			};
 
@@ -248,11 +269,17 @@ namespace TravelPlatform.Services.Core
 		{
 			bool result = false;
 
-			var post = await _dbContext.Posts.FindAsync(postId);
+			var post = await _dbContext.Posts
+		   .Include(p => p.Comments)
+		   .Include(p => p.Likes)
+		   .FirstOrDefaultAsync(p => p.Id == postId);
 
 			if (post != null)
 			{
+				_dbContext.Comments.RemoveRange(post.Comments);
+				_dbContext.Likes.RemoveRange(post.Likes);
 				_dbContext.Posts.Remove(post);
+
 				await _dbContext.SaveChangesAsync();
 
 				result = true;
@@ -320,7 +347,7 @@ namespace TravelPlatform.Services.Core
 					Username = c.User.UserName,
 					UserProfilePictureUrl = c.User.ProfilePictureUrl
 				})
-				.OrderByDescending(c => c.CreatedAt)
+				.OrderBy(c => c.CreatedAt)
 				.ToListAsync();
 
 			return commentsList;
@@ -398,6 +425,128 @@ namespace TravelPlatform.Services.Core
 				.ToListAsync();
 
 			return suggestedProfiles;
+		}
+
+		public async Task<int?> GetPostLikesCountAsync(int postId)
+		{
+			var post = await _dbContext.Posts
+				.Include(p => p.Likes)
+				.FirstOrDefaultAsync(p => p.Id == postId);
+
+			return post?.Likes.Count;
+		}
+
+		public async Task<IEnumerable<SuggestedPostsViewModel>> GetSuggestedPostsInfoAsync(string userId)
+		{
+			var posts = await _dbContext.Posts
+				.Include(p => p.User)
+				.Include(p => p.Comments)
+				.Include(p => p.Likes)
+				.Where(p => p.UserId != userId)
+				.Select(p => new SuggestedPostsViewModel
+				{
+					PostId = p.Id,
+					Title = p.Title,
+					ImageUrl = p.ImageUrl,
+					Username = p.User.UserName,
+					UserId = p.UserId,
+					ShortDescription = p.Content.Length > 100
+						? p.Content.Substring(0, 100) + "..."
+						: p.Content,
+					CommentsCount = p.Comments.Count,
+					LikesCount = p.Likes.Count
+				})
+				.ToListAsync();
+
+			var rnd = new Random();
+			var shuffledPosts = posts.OrderBy(p => rnd.Next()).ToList();
+
+			return shuffledPosts;
+		}
+
+		public async Task<bool> FollowAsync(string userId, string followedUserId)
+		{
+			bool result = false;
+
+			var user = await _dbContext.ApplicationUsers
+				.Include(u => u.Following)
+				.FirstOrDefaultAsync(u => u.Id == userId);
+
+			var followedUser = await _dbContext.ApplicationUsers
+				.Include(u => u.Followers)
+				.FirstOrDefaultAsync(u => u.Id == followedUserId);
+
+			if (user != null && followedUser != null && userId != followedUserId)
+			{
+				bool isAlreadyFollowing = user.Following
+					.Any(f => f.FollowingId == followedUserId);
+
+				if (!isAlreadyFollowing)
+				{
+					var follow = new Follow()
+					{
+						FollowerId = userId,
+						FollowingId = followedUserId,
+						CreatedOn = DateTime.UtcNow
+					};
+
+					await _dbContext.Follows.AddAsync(follow);
+					await _dbContext.SaveChangesAsync();
+
+					result = true;
+				}
+				else
+				{
+					var follow = _dbContext.Follows
+						.Where(f => f.FollowerId == userId && f.FollowingId == followedUserId)
+						.FirstOrDefault();
+
+					_dbContext.Follows.Remove(follow);
+					await _dbContext.SaveChangesAsync();
+				}
+			}
+
+			return result;
+		}
+
+		public async Task<IEnumerable<SuggestedProfilesViewModel>> GetFollowersAsync(string userId, string currentUserId)
+		{
+			var user = await _dbContext.ApplicationUsers
+			.Include(u => u.Followers)
+			.ThenInclude(f => f.Follower)
+			.FirstOrDefaultAsync(u => u.Id == userId);
+
+			var followers = user.Followers
+				.Select(f => new SuggestedProfilesViewModel
+			{
+				UserId = f.FollowerId,
+				Username = f.Follower.UserName,
+				ProfilePictureUrl = f.Follower.ProfilePictureUrl,
+				Bio = f.Follower.Bio,
+				IsFollowing = _dbContext.Follows.Any(x => x.FollowerId == currentUserId && x.FollowingId == f.FollowerId)
+			}).ToList();
+
+			return followers;
+		}
+
+		public async Task<IEnumerable<SuggestedProfilesViewModel>> GetFollowingAsync(string userId, string currentUserId)
+		{
+			var user = await _dbContext.ApplicationUsers
+			.Include(u => u.Following)
+			.ThenInclude(f => f.Following)
+			.FirstOrDefaultAsync(u => u.Id == userId);
+
+			var following = user.Following
+				.Select(f => new SuggestedProfilesViewModel
+				{
+					UserId = f.FollowingId,
+					Username = f.Following.UserName,
+					ProfilePictureUrl = f.Following.ProfilePictureUrl,
+					Bio = f.Following.Bio,
+					IsFollowing = _dbContext.Follows.Any(x => x.FollowerId == currentUserId && x.FollowingId == f.FollowingId)
+				}).ToList();
+
+			return following;
 		}
 	}
 }

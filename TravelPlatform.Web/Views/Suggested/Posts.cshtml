@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TravelPlatform.ViewModels.SuggestedPostsViewModel>
+
+@{
+	ViewData["Title"] = "Suggested Posts";
+}
+
+@section Styles {
+	<link href="~/css/suggested-posts.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<h2 class="sugg-h2 mb-4">Suggested Posts</h2>
+
+<div class="row sugg-container">
+	@if (Model == null || !Model.Any())
+	{
+		<p class="no-profiles ms-3 mt-0" style="color: var(--brown); font-size: 16px;">There are no suggested posts yet. Come back to check later!</p>
+	}
+	else
+	{
+		@foreach (var post in Model)
+		{
+			<div class="col-md-4 mb-4">
+				<div class="card h-100 shadow-sm">
+					@if (post.ImageUrl == null)
+					{
+						<img src="/images/place.jpg" alt="Post Image" />
+					}
+					else
+					{
+
+						<img src="@post.ImageUrl" class="card-img-top" alt="Post image" style="height: 200px; object-fit: cover;" />
+					}
+					<div class="card-body">
+						<h5 class="card-title">@post.Title</h5>
+						<h6 class="card-subtitle mb-2 text-muted">by @post.Username</h6>
+						<p class="card-text">@post.ShortDescription</p>
+
+						<div class="card-footer-section d-flex justify-content-between align-items-center text-muted small mb-2">
+							<span><i class="bi bi-heart"></i> @post.LikesCount likes</span>
+							<span><i class="bi bi-chat"></i> @post.CommentsCount comments</span>
+
+							<a href="/UserAccount/Index?userId=@post.UserId&highlightPost=@post.PostId" class="btn btn-outline-primary btn-sm">View Post</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		}
+	}
+</div>

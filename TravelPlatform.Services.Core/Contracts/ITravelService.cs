@@ -6,7 +6,7 @@ namespace TravelPlatform.Services.Core.Contracts
     {
         Task<bool> SendMessageAsync(AddMessageInputModel model);
 
-        Task<UserProfileViewModel> GetUserProfileInfoAsync(string userId);
+        Task<UserProfileViewModel> GetUserProfileInfoAsync(string userId, string currentUserId);
 
         Task<EditAccountInputModel> GetUserProfileEditInfoAsync(string userId);
 
@@ -31,5 +31,15 @@ namespace TravelPlatform.Services.Core.Contracts
         Task<CommentViewModel> GetLastCommentAsync(int postId, string userId);
 
         Task<IEnumerable<SuggestedProfilesViewModel>> GetSuggestedProfilesInfoAsync(string userId);
+
+        Task<int?> GetPostLikesCountAsync(int postId);
+
+		Task<IEnumerable<SuggestedPostsViewModel>> GetSuggestedPostsInfoAsync(string userId);
+
+        Task<bool> FollowAsync(string userId, string followedUserId);
+
+        Task<IEnumerable<SuggestedProfilesViewModel>> GetFollowersAsync(string userId, string currentUserId);
+
+        Task<IEnumerable<SuggestedProfilesViewModel>> GetFollowingAsync(string userId, string currentUserId);
 	}
 }
