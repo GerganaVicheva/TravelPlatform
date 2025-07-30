@@ -21,7 +21,7 @@ public class Program
 			options.UseSqlServer(connectionString));
 		builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-		builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+		builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 			.AddEntityFrameworkStores<TravelPlatformDbContext>();
 		builder.Services.AddControllersWithViews();
 
