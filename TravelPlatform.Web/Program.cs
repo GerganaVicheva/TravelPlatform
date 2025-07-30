@@ -21,13 +21,12 @@ public class Program
 			options.UseSqlServer(connectionString));
 		builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-		builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+		builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
 			.AddEntityFrameworkStores<TravelPlatformDbContext>();
 		builder.Services.AddControllersWithViews();
 
 		builder.Services.AddScoped<ITravelService, TravelService>();
 
-		// Fix: Ensure the required Google authentication package is referenced and the namespace is included.
 		builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 		{
 			googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];

@@ -5,13 +5,17 @@
     padding-top: 60px;
 }
 
+main {
+    padding-left: 10%;
+}
+
 /* Card Container */
 .row {
     display: flex;
     flex-wrap: wrap;
     margin-left: 10px;
     padding: 20px 0;
-    padding-bottom: 185px;
+    padding-bottom: 50px;
 }
 
 .col-md-4 {

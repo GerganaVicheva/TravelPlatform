@@ -121,3 +121,7 @@ body {
     background-color: var(--blue);
     color: white;
 }
+
+.suggested-profiles {
+    margin-bottom: 180px !important;
+}
