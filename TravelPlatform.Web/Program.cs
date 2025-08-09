@@ -11,7 +11,7 @@ namespace TravelPlatform.Web;
 
 public class Program
 {
-	public static void Main(string[] args)
+	public static async Task Main(string[] args)
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ public class Program
 		builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 		builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+			.AddRoles<IdentityRole>()
 			.AddEntityFrameworkStores<TravelPlatformDbContext>();
 		builder.Services.AddControllersWithViews();
 
@@ -41,6 +42,18 @@ public class Program
 
 		var app = builder.Build();
 
+		// Create roles and assign admin at startup
+		using (var scope = app.Services.CreateScope())
+		{
+			var services = scope.ServiceProvider;
+
+			// Create roles
+			await CreateRolesAsync(services);
+
+			// Assign Admin role to a specific user
+			await AssignAdminAsync(services);
+		}
+
 		// Configure the HTTP request pipeline.
 		if (app.Environment.IsDevelopment())
 		{
@@ -59,6 +72,10 @@ public class Program
 		app.UseAuthentication();
 		app.UseAuthorization();
 
+		app.MapControllerRoute(
+			name: "areas",
+			pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
 		app.MapStaticAssets();
 		app.MapControllerRoute(
 			name: "default",
@@ -68,5 +85,33 @@ public class Program
 		   .WithStaticAssets();
 
 		app.Run();
+	}
+
+	private static async Task CreateRolesAsync(IServiceProvider serviceProvider)
+	{
+		var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+		string[] roleNames = { "Administrator", "User" };
+
+		foreach (var roleName in roleNames)
+		{
+			var roleExist = await roleManager.RoleExistsAsync(roleName);
+			if (!roleExist)
+			{
+				await roleManager.CreateAsync(new IdentityRole(roleName));
+			}
+		}
+	}
+
+	private static async Task AssignAdminAsync(IServiceProvider serviceProvider)
+	{
+		var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+		var adminUser = await userManager.FindByEmailAsync("admin@example.com");
+
+		if (adminUser != null && !(await userManager.IsInRoleAsync(adminUser, "Administrator")))
+		{
+			await userManager.AddToRoleAsync(adminUser, "Administrator");
+		}
 	}
 }

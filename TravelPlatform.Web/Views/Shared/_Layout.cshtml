@@ -33,17 +33,21 @@
 				<h2 class="m-0">Wanderly</h2>
 			</div>
 			<ul class="nav-links mb-0 mx-2">
-				<li class="ms-0"><a asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a></li>
+				<li class="ms-0"><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a></li>
 				<li><a href="/#about">About us</a></li>
 				<li><a href="/#team">Team</a></li>
-				<li><a asp-controller="Home" asp-action="Contact">Contacts</a></li>
-				@if (User.Identity.IsAuthenticated)
+				<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contacts</a></li>
+				@if (User.IsInRole("Administrator"))
+				{
+					<li><a asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+				}
+				@if (User.Identity.IsAuthenticated && !User.IsInRole("Administrator"))
 				{
 					<li class="dropdown">
 						<button class="dropbtn">Explore</button>
 						<div class="dropdown-content">
-							<a asp-controller="Suggested" asp-action="Profiles">View Porfiles</a>
-							<a asp-controller="Suggested" asp-action="Posts">View Posts</a>
+							<a asp-area="" asp-controller="Suggested" asp-action="Profiles">View Porfiles</a>
+							<a asp-area="" asp-controller="Suggested" asp-action="Posts">View Posts</a>
 						</div>
 					</li>
 				}
@@ -150,7 +154,8 @@
 					</p>
 					<div class="d-flex">
 						<a asp-area="" asp-controller="Home" asp-action="Privacy" class="footer-link footer-bottom-link">
-							Privacy Policy</a>
+							Privacy Policy
+						</a>
 					</div>
 				</div>
 			</div>

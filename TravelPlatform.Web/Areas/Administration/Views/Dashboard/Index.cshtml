@@ -1,0 +1,110 @@
+﻿@{
+	ViewData["Title"] = "Admin Dashboard";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/dashboard.css" />
+}
+
+<h1>Admin Dashboard</h1>
+
+<div class="dashboard-summary">
+	<div class="card">
+		<h3>Total Users</h3>
+		<p>1234</p>
+	</div>
+	<div class="card">
+		<h3>Travel Posts</h3>
+		<p>567</p>
+	</div>
+	<div class="card">
+		<h3>Total Likes</h3>
+		<p>12</p>
+	</div>
+	<div class="card">
+		<h3>Total Comments</h3>
+		<p>12</p>
+	</div>
+</div>
+
+<div class="charts-container" style="margin-top: 3rem; margin-bottom: 60px; margin-left: 15px; margin-right: 15px; display: flex; gap: 2rem;">
+	<div class="chart-card" style="flex:1; background:#f5f5f5; padding:1rem; border-radius:8px;">
+		<h3>Daily Active Users (Last 7 Days)</h3>
+		<canvas id="usersChart"></canvas>
+	</div>
+	<div class="chart-card" style="flex:1; background:#f5f5f5; padding:1rem; border-radius:8px;">
+		<h3>Travel Posts Created (Last 7 Days)</h3>
+		<canvas id="postsChart"></canvas>
+	</div>
+</div>
+
+@* <div class="admin-links"> *@
+@*     <h2>Quick Links</h2> *@
+@*     <ul> *@
+@*         <li><a href="/Administration/Users">Manage Users</a></li> *@
+@*         <li><a href="/Administration/Posts">Moderate Posts</a></li> *@
+@*         <li><a href="/Administration/Reports">View Reports</a></li> *@
+@*         <li><a href="/">Go to Website</a></li> *@
+@*     </ul> *@
+@* </div> *@
+
+@section Scripts {
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		const days = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewData["Days"]));
+		const dailyActiveUsers = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewData["DailyActiveUsers"]));
+		const travelPosts = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewData["TravelPosts"]));
+
+		const usersCtx = document.getElementById('usersChart').getContext('2d');
+		const usersChart = new Chart(usersCtx, {
+			type: 'line',
+			data: {
+				labels: days,
+				datasets: [{
+					label: 'Active Users',
+					data: dailyActiveUsers,
+					borderColor: 'rgba(75, 192, 192, 1)',
+					backgroundColor: 'rgba(75, 192, 192, 0.2)',
+					fill: true,
+					tension: 0.3,
+					pointRadius: 5,
+					pointHoverRadius: 7
+				}]
+			},
+			options: {
+				responsive: true,
+				scales: {
+					y: {
+						beginAtZero: true,
+						ticks: { stepSize: 20 }
+					}
+				}
+			}
+		});
+
+		const postsCtx = document.getElementById('postsChart').getContext('2d');
+		const postsChart = new Chart(postsCtx, {
+			type: 'bar',
+			data: {
+				labels: days,
+				datasets: [{
+					label: 'Travel Posts',
+					data: travelPosts,
+					backgroundColor: 'rgba(255, 159, 64, 0.7)',
+					borderColor: 'rgba(255, 159, 64, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: true,
+				scales: {
+					y: {
+						beginAtZero: true,
+						ticks: { stepSize: 2 }
+					}
+				}
+			}
+		});
+	</script>
+}
