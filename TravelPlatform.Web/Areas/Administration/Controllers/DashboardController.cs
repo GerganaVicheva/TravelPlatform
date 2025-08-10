@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TravelPlatform.Services.Core.Contracts;
 using TravelPlatform.Web.Data;
 
 namespace TravelPlatform.Web.Areas.Administration.Controllers
@@ -8,52 +9,34 @@ namespace TravelPlatform.Web.Areas.Administration.Controllers
 	[Area("Administration")]
 	[Authorize(Roles = "Administrator")]
 	public class DashboardController : Controller
-    {
-		private readonly TravelPlatformDbContext _context;
+	{
+		private readonly IDashboardService _dashboardService;
 
-		public DashboardController(TravelPlatformDbContext context)
+		public DashboardController(IDashboardService dashboardService)
 		{
-			_context = context;
+			_dashboardService = dashboardService;
 		}
 
 		public async Task<IActionResult> Index()
-        {
-			var today = DateTime.UtcNow.Date;
-			var startDate = today.AddDays(-6); // last 7 days including today
+		{
+			try
+			{
+				var (days, travelPosts, dailyActiveUsers) = await _dashboardService.GetDashboardDataAsync();
 
-			var travelPosts = Enumerable.Range(0, 7)
-				.Select(offset =>
-				{
-					var date = startDate.AddDays(offset);
-					return _context.Posts
-						.Where(p => p.CreatedOn.Date == date)
-						.Count();
-				})
-				.ToArray();
+				ViewData["Days"] = days;
+				ViewData["TravelPosts"] = travelPosts;
+				ViewData["DailyActiveUsers"] = dailyActiveUsers;
 
-			var days = Enumerable.Range(0, 7)
-				.Select(offset => startDate.AddDays(offset).ToString("ddd"))
-				.ToArray();
+				var model = await _dashboardService.GetDashboardTotalDataAsync();
 
-			ViewData["Days"] = days;
-			ViewData["TravelPosts"] = travelPosts;
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
 
-			// For demonstration, here we'll just count users who posted on each day as an active user proxy
-			var dailyActiveUsers = Enumerable.Range(0, 7)
-				.Select(offset =>
-				{
-					var date = startDate.AddDays(offset);
-					return _context.Posts
-						.Where(p => p.CreatedOn.Date == date)
-						.Select(p => p.UserId)
-						.Distinct()
-						.Count();
-				})
-				.ToArray();
-
-			ViewData["DailyActiveUsers"] = dailyActiveUsers;
-
-			return View();
+				return RedirectToAction(nameof(Index), "Home", new { area = "" });
+			}
 		}
-    }
+	}
 }

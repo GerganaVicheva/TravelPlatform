@@ -1,4 +1,6 @@
-﻿@{
+﻿@model TravelPlatform.ViewModels.DashboardDataViewModel
+
+@{
 	ViewData["Title"] = "Admin Dashboard";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -12,19 +14,19 @@
 <div class="dashboard-summary">
 	<div class="card">
 		<h3>Total Users</h3>
-		<p>1234</p>
+		<p>@Model.TotalUsers</p>
 	</div>
 	<div class="card">
 		<h3>Travel Posts</h3>
-		<p>567</p>
+		<p>@Model.TotalPosts</p>
 	</div>
 	<div class="card">
 		<h3>Total Likes</h3>
-		<p>12</p>
+		<p>@Model.TotalLikes</p>
 	</div>
 	<div class="card">
 		<h3>Total Comments</h3>
-		<p>12</p>
+		<p>@Model.TotalComments</p>
 	</div>
 </div>
 

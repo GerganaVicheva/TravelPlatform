@@ -27,6 +27,7 @@ public class Program
 		builder.Services.AddControllersWithViews();
 
 		builder.Services.AddScoped<ITravelService, TravelService>();
+		builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 		builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 		{
