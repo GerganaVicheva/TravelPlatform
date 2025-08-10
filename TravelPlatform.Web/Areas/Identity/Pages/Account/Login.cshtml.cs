@@ -15,18 +15,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using TravelPlatform.Data.Models;
+using Microsoft.AspNet.Identity;
 
 namespace TravelPlatform.Web.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+		private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
+		private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager,
+			Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
+			ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
-            _logger = logger;
+			_userManager = userManager;
+			_logger = logger;
         }
 
         /// <summary>
@@ -114,9 +119,18 @@ namespace TravelPlatform.Web.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+				{
+					_logger.LogInformation("User logged in.");
+
+					var user = await _userManager.FindByEmailAsync(Input.Email);
+
+					// If admin, go straight to Dashboard
+					if (await _userManager.IsInRoleAsync(user, "Administrator"))
+					{
+						return RedirectToAction("Index", "Dashboard", new { area = "Administration" });
+					}
+
+					return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

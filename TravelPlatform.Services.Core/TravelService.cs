@@ -409,8 +409,18 @@ namespace TravelPlatform.Services.Core
 
 		public async Task<IEnumerable<SuggestedProfilesViewModel>> GetSuggestedProfilesInfoAsync(string userId)
 		{
+			var adminRoleId = _dbContext.Roles
+				.Where(r => r.Name == "Administrator")
+				.Select(r => r.Id)
+				.FirstOrDefault();
+
+			var adminUserIds = await _dbContext.UserRoles
+				.Where(ur => ur.RoleId == adminRoleId)
+				.Select(ur => ur.UserId)
+				.FirstOrDefaultAsync();
+
 			var suggestedProfiles = await _dbContext.ApplicationUsers
-				.Where(u => u.Id != userId)
+				.Where(u => u.Id != userId && u.Id != adminUserIds)
 				.Include(u => u.Followers)
 				.OrderBy(u => Guid.NewGuid())
 				.Select(u => new SuggestedProfilesViewModel
@@ -518,13 +528,13 @@ namespace TravelPlatform.Services.Core
 
 			var followers = user.Followers
 				.Select(f => new SuggestedProfilesViewModel
-			{
-				UserId = f.FollowerId,
-				Username = f.Follower.UserName,
-				ProfilePictureUrl = f.Follower.ProfilePictureUrl,
-				Bio = f.Follower.Bio,
-				IsFollowing = _dbContext.Follows.Any(x => x.FollowerId == currentUserId && x.FollowingId == f.FollowerId)
-			}).ToList();
+				{
+					UserId = f.FollowerId,
+					Username = f.Follower.UserName,
+					ProfilePictureUrl = f.Follower.ProfilePictureUrl,
+					Bio = f.Follower.Bio,
+					IsFollowing = _dbContext.Follows.Any(x => x.FollowerId == currentUserId && x.FollowingId == f.FollowerId)
+				}).ToList();
 
 			return followers;
 		}

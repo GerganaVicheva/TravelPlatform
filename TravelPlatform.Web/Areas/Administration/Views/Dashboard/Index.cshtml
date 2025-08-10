@@ -9,7 +9,16 @@
 	<link rel="stylesheet" href="~/css/dashboard.css" />
 }
 
-<h1>Admin Dashboard</h1>
+<h1 style="margin-top: 60px; color: var(--brown); font-size: 35px; margin-left: 15px; margin-bottom: 20px;">Admin Dashboard</h1>
+
+<div class="admin-links">
+	<h3>Quick Links</h3>
+	<ul>
+		<li><a class="a-users" asp-area="" asp-controller="Suggested" asp-action="Profiles">Manage Users</a></li>
+		<li><a class="a-posts" asp-area="" asp-controller="Suggested" asp-action="Posts">Moderate Posts</a></li>
+		<li><a class="a-site" asp-area="" asp-controller="Home" asp-action="Index">Go to Website</a></li>
+	</ul>
+</div>
 
 <div class="dashboard-summary">
 	<div class="card">
@@ -46,9 +55,8 @@
 @*     <ul> *@
 @*         <li><a href="/Administration/Users">Manage Users</a></li> *@
 @*         <li><a href="/Administration/Posts">Moderate Posts</a></li> *@
-@*         <li><a href="/Administration/Reports">View Reports</a></li> *@
 @*         <li><a href="/">Go to Website</a></li> *@
-@*     </ul> *@
+@*     </ul>  *@
 @* </div> *@
 
 @section Scripts {

@@ -54,10 +54,10 @@
 					</div>
 				</div>
 				<div class="mt-3">
-					@if (Model.UserId == currentUserId)
+					@if (Model.UserId == currentUserId || User.IsInRole("Administrator"))
 					{
-						<a asp-controller="UserAccount" asp-action="Edit" asp-route-userId="@currentUserId" class="btn btn-outline-custom me-2">Edit Profile</a>
-						<a asp-controller="Post" asp-action="Add" asp-route-userId="@currentUserId" class="btn btn-outline-custom">Add Post</a>
+						<a asp-area="" asp-controller="UserAccount" asp-action="Edit" asp-route-userId="@Model.UserId" class="btn btn-outline-custom me-2">Edit Profile</a>
+						<a asp-area="" asp-controller="Post" asp-action="Add" asp-route-userId="@Model.UserId" class="btn btn-outline-custom">Add Post</a>
 					}
 					else
 					{

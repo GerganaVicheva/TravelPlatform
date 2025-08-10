@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<TravelPlatform.ViewModels.SuggestedPostsViewModel>
 
 @{
-	ViewData["Title"] = "Suggested Posts";
+	ViewData["Title"] = User.IsInRole("Administrator") ? "Moderate Posts" : "Suggested Posts";
 }
 
 @section Styles {
 	<link href="~/css/suggested-posts.css" rel="stylesheet" asp-append-version="true" />
 }
 
-<h2 class="sugg-h2 mb-4">Suggested Posts</h2>
+<h2 class="sugg-h2 mb-4">@(User.IsInRole("Administrator") ? "Moderate Posts" : "Suggested Posts")</h2>
 
 <div class="row sugg-container">
 	@if (Model == null || !Model.Any())
