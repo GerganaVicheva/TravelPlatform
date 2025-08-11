@@ -8,7 +8,18 @@
 	<link href="~/css/suggested-posts.css" rel="stylesheet" asp-append-version="true" />
 }
 
-<h2 class="sugg-h2 mb-4">@(User.IsInRole("Administrator") ? "Moderate Posts" : "Suggested Posts")</h2>
+<div class="d-flex align-items-center justify-content-between">
+	<h2 class="sugg-h2 mb-4">@(User.IsInRole("Administrator") ? "Moderate Posts" : "Suggested Posts")</h2>
+
+	<form method="get" asp-area="" asp-controller="Suggested" asp-action="Posts" class="mb-2 d-flex" style="margin-right: 184px;">
+		<input type="text" name="searchTerm"
+			   value="@Context.Request.Query["searchTerm"]"
+			   placeholder="Search posts..."
+			   class="form-control d-inline-block"
+			   style="width: 300px;" />
+		<button type="submit" class="btn btn-primary ms-2" style="background-color: #5196CF;">Search</button>
+	</form>
+</div>
 
 <div class="row sugg-container">
 	@if (Model == null || !Model.Any())

@@ -7,6 +7,9 @@
             url: '/UserAccount/Follow',
             type: 'POST',
             data: { followedUserId: followedUserId },
+            headers: {
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+            },
             success: function (response) {
                 if (response.success) {
                     const isFollowing = response.isFollowing;

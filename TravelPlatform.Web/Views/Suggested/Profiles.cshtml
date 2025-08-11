@@ -8,7 +8,18 @@
 	<link href="~/css/suggested-profiles.css" rel="stylesheet" asp-append-version="true" />
 }
 
-<h2 class="sugg-h2">@(User.IsInRole("Administrator") ? "Manage Profiles" : "Suggested Profiles")</h2>
+<div class="d-flex align-items-center justify-content-between">
+	<h2 class="sugg-h2">@(User.IsInRole("Administrator") ? "Manage Profiles" : "Suggested Profiles")</h2>
+
+	<form method="get" asp-area="" asp-controller="Suggested" asp-action="Profiles" class="mb-2 d-flex" style="margin-right: 15px;">
+		<input type="text" name="searchTerm"
+			   value="@Context.Request.Query["searchTerm"]"
+			   placeholder="Search profiles..."
+			   class="form-control d-inline-block"
+			   style="width: 300px;" />
+		<button type="submit" class="btn btn-primary ms-2" style="background-color: #5196CF;">Search</button>
+	</form>
+</div>
 
 <div class="suggested-profiles">
 	@if (Model == null || !Model.Any())

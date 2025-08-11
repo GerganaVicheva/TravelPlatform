@@ -31,6 +31,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Add(AddPostInputModel model)
 		{
 			try
@@ -82,6 +83,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(EditPostInputModel editedModel)
 		{
 			try
@@ -109,6 +111,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(int postId)
 		{
 			try
@@ -166,6 +169,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> AddComment(int postId, string content)
 		{
 			string userId = GetUserId();

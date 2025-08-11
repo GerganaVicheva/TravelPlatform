@@ -24,8 +24,12 @@ namespace TravelPlatform.Services.Core
 			bool result = false;
 
 			bool isEmailValid = IsEmailValid(model.Email);
+			bool isModelValid = !string.IsNullOrEmpty(model.FirstName)
+				&& !string.IsNullOrEmpty(model.LastName)
+				&& !string.IsNullOrEmpty(model.Subject)
+				&& !string.IsNullOrEmpty(model.Content);
 
-			if (isEmailValid)
+			if (isEmailValid && isModelValid)
 			{
 				MessageContact message = new MessageContact()
 				{
@@ -199,7 +203,11 @@ namespace TravelPlatform.Services.Core
 
 			var user = await _dbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
 
-			if (user != null)
+			bool isDestinationValid = !string.IsNullOrWhiteSpace(model.DestinationName) &&
+				!string.IsNullOrWhiteSpace(model.DestinationTown) &&
+				!string.IsNullOrWhiteSpace(model.DestinationCountry);
+
+			if (user != null && isDestinationValid)
 			{
 				var post = new Post()
 				{

@@ -13,13 +13,20 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Profiles()
+		public async Task<IActionResult> Profiles(string searchTerm)
 		{
 			try
 			{
 				string userId = GetUserId();
 
 				var profiles = await _travelService.GetSuggestedProfilesInfoAsync(userId);
+
+				if (!string.IsNullOrWhiteSpace(searchTerm))
+				{
+					profiles = profiles
+						.Where(p => p.Username.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+						.ToList();
+				}
 
 				return View(profiles);
 			}
@@ -32,15 +39,24 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Posts()
+		public async Task<IActionResult> Posts(string searchTerm)
 		{
 			try
 			{
 				string userId = GetUserId();
 
-				var profiles = await _travelService.GetSuggestedPostsInfoAsync(userId);
+				var posts = await _travelService.GetSuggestedPostsInfoAsync(userId);
 
-				return View(profiles);
+				if (!string.IsNullOrWhiteSpace(searchTerm))
+				{
+					posts = posts
+						.Where(p => p.Username.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+							|| p.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+							|| p.ShortDescription.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+						.ToList();
+				}
+
+				return View(posts);
 			}
 			catch (Exception e)
 			{

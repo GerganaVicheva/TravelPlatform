@@ -64,6 +64,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(EditAccountInputModel editedModel)
 		{
 			try
@@ -93,6 +94,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(string userId)
 		{
 			try
@@ -116,6 +118,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Follow(string followedUserId)
 		{
 			try

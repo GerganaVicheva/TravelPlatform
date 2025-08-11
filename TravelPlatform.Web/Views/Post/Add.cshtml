@@ -13,6 +13,8 @@
 <h2 class="h-add">Create a New Post</h2>
 
 <form asp-action="Add" method="post">
+    @Html.AntiForgeryToken()
+
     <div class="form-group">
         <label asp-for="Title"></label>
         <input asp-for="Title" class="form-control" />

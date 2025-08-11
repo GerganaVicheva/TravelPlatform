@@ -61,6 +61,8 @@
 					}
 					else
 					{
+						@Html.AntiForgeryToken()
+
 						<button id="followBtn"
 								class="btn btn-outline-custom"
 								data-user-id="@Model.UserId"
@@ -145,6 +147,8 @@
 									<div class="user-control-btns">
 										<a asp-controller="Post" asp-action="Edit" asp-route-postId="@post.Id" class="btn btn-primary">Edit Post</a>
 										<form asp-controller="Post" asp-action="Delete" method="post">
+											@Html.AntiForgeryToken()
+
 											<input type="hidden" name="postId" value="@post.Id" />
 											<button type="submit" class="btn btn-danger"
 													onclick="return confirm('Are you sure you want to delete this post?')">
@@ -174,6 +178,8 @@
 									<!-- AJAX-loaded comments go here -->
 								</div>
 								<form id="addCommentForm">
+									@Html.AntiForgeryToken()
+
 									<textarea name="content" placeholder="Add a comment..." required></textarea>
 									<input type="hidden" name="postId" id="modalPostId" />
 									<button type="submit">Post Comment</button>

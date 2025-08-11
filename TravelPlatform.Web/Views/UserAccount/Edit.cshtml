@@ -13,6 +13,8 @@
 <h2 class="h-edit">Edit Your Account</h2>
 
 <form asp-controller="UserAccount" asp-action="Edit" method="post" class="acc-form">
+    @Html.AntiForgeryToken()
+
     <div class="form-group">
         <label asp-for="Username"></label>
         <input asp-for="Username" class="form-control" required/>
@@ -41,6 +43,8 @@
     </form>
 
     <form asp-controller="UserAccount" asp-action="Delete" method="post">
+		@Html.AntiForgeryToken()
+
         <input type="hidden" name="userId" value="@currentUserId" />
         <button type="submit" class="btn btn-danger"
                 onclick="return confirm('Are you sure you want to delete your account?')">

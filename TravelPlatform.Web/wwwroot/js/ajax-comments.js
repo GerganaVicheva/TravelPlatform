@@ -36,8 +36,9 @@
 
         const postId = $('#modalPostId').val();
         const content = $(this).find('textarea[name="content"]').val();
+        const token = $(this).find('input[name="__RequestVerificationToken"]').val();
 
-        $.post('/Post/AddComment', { postId, content }, function (response) {
+        $.post('/Post/AddComment', { postId, content, "__RequestVerificationToken": token }, function (response) {
             if (response.success) {
                 const comment = response.comment;
 

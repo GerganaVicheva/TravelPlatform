@@ -43,6 +43,7 @@
 						<div id="response-message" style="display: none;"></div>
 						<form class="contact-form" id="contact-form" method="post" action="@Url.Action("SendMessage", "Home")">
 							@Html.AntiForgeryToken()
+
 							<div class="row mb-3">
 								<div class="col-md-6">
 									<input type="text" class="form-control form-control-lg" placeholder="First Name"
