@@ -10,6 +10,7 @@ Wanderly is a modern social travel platform designed to connect travelers around
 - **Follow System**: Follow other users to see their latest travel posts.
 - **Likes & Comments**: Engage with posts by liking and commenting.
 - **Suggested Posts & Profiles**: Get personalized suggestions based on your interests.
+- **Searching & Filtering Options**: Get maximum accuracy in searching for posts or profiles.
 - **Responsive Design**: Optimized for desktop and mobile devices.
 
 ## Tech Stack
