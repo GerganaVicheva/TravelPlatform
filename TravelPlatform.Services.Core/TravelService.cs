@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Net.Mail;
 using System.Runtime.InteropServices;
 using TravelPlatform.Data.Models;
@@ -456,10 +457,13 @@ namespace TravelPlatform.Services.Core
 
 		public async Task<IEnumerable<SuggestedPostsViewModel>> GetSuggestedPostsInfoAsync(string userId)
 		{
+			var textInfo = CultureInfo.InvariantCulture.TextInfo;
+
 			var posts = await _dbContext.Posts
 				.Include(p => p.User)
 				.Include(p => p.Comments)
 				.Include(p => p.Likes)
+				.Include(p => p.Destination)
 				.Where(p => p.UserId != userId)
 				.Select(p => new SuggestedPostsViewModel
 				{
@@ -472,7 +476,14 @@ namespace TravelPlatform.Services.Core
 						? p.Content.Substring(0, 100) + "..."
 						: p.Content,
 					CommentsCount = p.Comments.Count,
-					LikesCount = p.Likes.Count
+					LikesCount = p.Likes.Count,
+					DestinationId = p.DestinationId,
+					Destination = new DestinationViewModel
+					{
+						Id = p.Destination.Id,
+						Town = textInfo.ToTitleCase(p.Destination.Town.ToLower()),
+						Country = textInfo.ToTitleCase(p.Destination.Country.ToLower())
+					}
 				})
 				.ToListAsync();
 

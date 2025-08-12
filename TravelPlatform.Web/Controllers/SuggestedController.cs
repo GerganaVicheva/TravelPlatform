@@ -39,7 +39,7 @@ namespace TravelPlatform.Web.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Posts(string searchTerm)
+		public async Task<IActionResult> Posts(string searchTerm, string country, string town)
 		{
 			try
 			{
@@ -47,6 +47,36 @@ namespace TravelPlatform.Web.Controllers
 
 				var posts = await _travelService.GetSuggestedPostsInfoAsync(userId);
 
+				var allDestinations = posts.Select(p => p.Destination).DistinctBy(d => d.Country).ToList();
+				ViewBag.Countries = allDestinations.Select(d => d.Country).Distinct().OrderBy(c => c).ToList();
+
+				// If a country is chosen, extract towns only from that country
+				if (!string.IsNullOrEmpty(country))
+				{
+					ViewBag.Towns = posts
+						.Select(p => p.Destination)
+						.Where(d => d.Country.Equals(country, StringComparison.OrdinalIgnoreCase))
+						.Select(d => d.Town)
+						.Distinct()
+						.OrderBy(t => t)
+						.ToList();
+				}
+
+				// Filtering by country
+				if (!string.IsNullOrEmpty(country))
+				{
+					posts = posts.Where(p => p.Destination.Country.Equals(
+						country, StringComparison.OrdinalIgnoreCase));
+				}
+
+				// Filtering by town
+				if (!string.IsNullOrEmpty(town))
+				{
+					posts = posts.Where(p => p.Destination.Town.Equals(
+						town, StringComparison.OrdinalIgnoreCase));
+				}
+
+				// Searching by keywords
 				if (!string.IsNullOrWhiteSpace(searchTerm))
 				{
 					posts = posts

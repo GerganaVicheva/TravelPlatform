@@ -17,5 +17,9 @@
 		public int LikesCount { get; set; }
 
 		public int CommentsCount { get; set; }
+
+		public int DestinationId { get; set; }
+
+		public DestinationViewModel Destination { get; set; }
 	}
 }

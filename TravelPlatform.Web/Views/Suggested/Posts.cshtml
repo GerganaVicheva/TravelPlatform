@@ -15,16 +15,36 @@
 		<input type="text" name="searchTerm"
 			   value="@Context.Request.Query["searchTerm"]"
 			   placeholder="Search posts..."
-			   class="form-control d-inline-block"
+			   class="form-control d-inline-block me-2"
 			   style="width: 300px;" />
-		<button type="submit" class="btn btn-primary ms-2" style="background-color: #5196CF;">Search</button>
+
+		<select name="country" id="countryDropdown" class="form-select me-2" style="width: 150px;">
+			<option value="">All Countries</option>
+			@foreach (var country in ViewBag.Countries as List<string>)
+			{
+				<option value="@country" selected="@(country == Context.Request.Query["country"])">@country</option>
+			}
+		</select>
+
+		<select name="town" id="townDropdown" class="form-select me-2" style="width: 150px;">
+			<option value="">All Towns</option>
+			@if (ViewBag.Towns != null)
+			{
+				foreach (var town in ViewBag.Towns as List<string>)
+				{
+					<option value="@town" selected="@(town == Context.Request.Query["town"])">@town</option>
+				}
+			}
+		</select>
+
+		<button type="submit" class="btn btn-primary" style="background-color: #5196CF;">Search</button>
 	</form>
 </div>
 
 <div class="row sugg-container">
 	@if (Model == null || !Model.Any())
 	{
-		<p class="no-profiles ms-3 mt-0" style="color: var(--brown); font-size: 16px;">There are no suggested posts yet. Come back to check later!</p>
+		<p class="no-profiles ms-3 mt-0" style="color: var(--brown); font-size: 16px; padding-bottom: 545px;">There are no suggested posts yet. Come back to check later!</p>
 	}
 	else
 	{
@@ -59,3 +79,35 @@
 		}
 	}
 </div>
+
+
+@section Scripts {
+	<script>
+		const postsDestinations = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+		Model.Select(p => p.Destination).DistinctBy(d => new { d.Country, d.Town })
+	));
+
+		document.getElementById("countryDropdown").addEventListener("change", function () {
+			let country = this.value;
+			let townDropdown = document.getElementById("townDropdown");
+
+			townDropdown.innerHTML = '<option value="">All Towns</option>'; // reset towns
+
+			if (country) {
+				const towns = [...new Set(
+					postsDestinations
+						.filter(d => d.Country === country)
+						.map(d => d.Town)
+				)];
+
+				towns.forEach(t => {
+					let option = document.createElement("option");
+					option.value = t;
+					option.textContent = t;
+					townDropdown.appendChild(option);
+				});
+			}
+		});
+	</script>
+
+}
