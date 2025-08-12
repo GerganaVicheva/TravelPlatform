@@ -84,8 +84,8 @@
 @section Scripts {
 	<script>
 		const postsDestinations = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-		Model.Select(p => p.Destination).DistinctBy(d => new { d.Country, d.Town })
-	));
+			Model.Select(p => p.Destination).DistinctBy(d => new { d.Country, d.Town })
+		));
 
 		document.getElementById("countryDropdown").addEventListener("change", function () {
 			let country = this.value;
@@ -109,5 +109,4 @@
 			}
 		});
 	</script>
-
 }

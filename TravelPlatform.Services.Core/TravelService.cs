@@ -76,6 +76,8 @@ namespace TravelPlatform.Services.Core
 			.ThenInclude(f => f.Following)
 			.FirstOrDefaultAsync(u => u.Id == userId);
 
+			var textInfo = CultureInfo.InvariantCulture.TextInfo;
+
 			var posts = await _dbContext.Posts
 				.Where(p => p.UserId == userId)
 				.Include(p => p.Destination)
@@ -91,9 +93,9 @@ namespace TravelPlatform.Services.Core
 					CreatedOn = p.CreatedOn,
 					Likes = p.Likes.Count,
 					Comments = p.Comments.Count,
-					DestinationName = p.Destination.Name,
-					Town = p.Destination.Town,
-					Country = p.Destination.Country,
+					DestinationName = textInfo.ToTitleCase(p.Destination.Name.ToLower()),
+					Town = textInfo.ToTitleCase(p.Destination.Town.ToLower()),
+					Country = textInfo.ToTitleCase(p.Destination.Country.ToLower()),
 					//IsLikedByCurrentUser = _dbContext.Likes
 					//	.Any(l => l.PostId == p.Id && l.UserId == userId)
 					IsLikedByCurrentUser = p.Likes.Any(l => l.UserId == currentUserId)
@@ -187,6 +189,8 @@ namespace TravelPlatform.Services.Core
 		{
 			bool result = false;
 
+			var textInfo = CultureInfo.InvariantCulture.TextInfo;
+
 			var destination = await _dbContext.Destinations
 				.FirstOrDefaultAsync(d => d.Name.ToLower() == model.DestinationName.ToLower() &&
 				d.Town.ToLower() == model.DestinationTown.ToLower() &&
@@ -196,9 +200,9 @@ namespace TravelPlatform.Services.Core
 			{
 				destination = new Destination()
 				{
-					Name = model.DestinationName,
-					Town = model.DestinationTown,
-					Country = model.DestinationCountry
+					Name = textInfo.ToTitleCase(model.DestinationName.ToLower()),
+					Town = textInfo.ToTitleCase(model.DestinationTown.ToLower()),
+					Country = textInfo.ToTitleCase(model.DestinationCountry.ToLower())
 				};
 			}
 
