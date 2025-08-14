@@ -602,3 +602,12 @@ html {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+#about a {
+    transition: all 0.3s ease;
+}
+
+#about a:hover {
+    color: white;
+    background: var(--green);
+}
