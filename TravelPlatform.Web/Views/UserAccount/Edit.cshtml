@@ -1,5 +1,4 @@
-﻿@using TravelPlatform.ViewModels
-@model EditAccountInputModel
+﻿@model TravelPlatform.ViewModels.EditAccountInputModel
 
 @{
     ViewData["Title"] = "Edit Account";
@@ -14,6 +13,8 @@
 
 <form asp-controller="UserAccount" asp-action="Edit" method="post" class="acc-form">
     @Html.AntiForgeryToken()
+
+	<input type="hidden" asp-for="UserId" />
 
     <div class="form-group">
         <label asp-for="Username"></label>
@@ -34,7 +35,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
-    <a asp-controller="UserAccount" asp-action="Index" asp-route-userId="@currentUserId" class="btn btn-secondary mt-4">Cancel</a>
+    <a asp-controller="UserAccount" asp-action="Index" asp-route-userId="@Model.UserId" class="btn btn-secondary mt-4">Cancel</a>
 </form>
 
 <div class="actions">
@@ -45,7 +46,7 @@
     <form asp-controller="UserAccount" asp-action="Delete" method="post">
 		@Html.AntiForgeryToken()
 
-        <input type="hidden" name="userId" value="@currentUserId" />
+        <input type="hidden" name="userId" value="@Model.UserId" />
         <button type="submit" class="btn btn-danger"
                 onclick="return confirm('Are you sure you want to delete your account?')">
             Delete Account

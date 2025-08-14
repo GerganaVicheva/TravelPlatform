@@ -140,6 +140,7 @@ namespace TravelPlatform.Services.Core
 
 			var model = new EditAccountInputModel
 			{
+				UserId = userId,
 				Username = user.UserName,
 				Bio = user.Bio,
 				ProfilePictureUrl = user.ProfilePictureUrl

@@ -106,7 +106,15 @@ namespace TravelPlatform.Web.Controllers
 					return RedirectToAction(nameof(Index), new { userId });
 				}
 
-				await _signInManager.SignOutAsync();
+				if (userId == GetUserId())
+				{
+					await _signInManager.SignOutAsync();
+				}
+				else
+				{
+					return RedirectToAction("Profiles", "Suggested");
+				}
+
 				return RedirectToAction("Index", "Home");
 			}
 			catch (Exception e)
