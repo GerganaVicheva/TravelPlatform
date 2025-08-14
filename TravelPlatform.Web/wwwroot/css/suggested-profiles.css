@@ -1,6 +1,6 @@
 ﻿.suggested-profiles {
     margin-top: 15px;
-    height: 85vh;
+    min-height: 85vh;
 }
 
 /* Profile Card */
